@@ -20,6 +20,10 @@ namespace SpeakingInBits.Models
             options.Password.RequireUppercase = false;
             options.Password.RequiredLength = 8;
             options.Password.RequireNonAlphanumeric = false;
+
+            //Set Lockout options
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+            options.Lockout.MaxFailedAccessAttempts = 5;
         }
     }
 }
