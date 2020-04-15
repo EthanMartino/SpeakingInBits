@@ -74,7 +74,10 @@ namespace SpeakingInBits
             IServiceScope serviceProvider = app.ApplicationServices
                 .GetRequiredService<IServiceProvider>()
                 .CreateScope();
-            IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.Instructor, IdentityHelper.Student).Wait();
+            IdentityHelper.CreateRoles(serviceProvider.ServiceProvider, IdentityHelper.Instructor, IdentityHelper.Student)
+                .Wait();
+            IdentityHelper.CreateDefualtInstructor(serviceProvider.ServiceProvider)
+                .Wait();
         }
     }
 }
