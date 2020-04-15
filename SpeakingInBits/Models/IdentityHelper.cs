@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +44,30 @@ namespace SpeakingInBits.Models
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
+            }
+        }
+
+        public static async Task CreateDefualtInstructor(IServiceProvider serviceProvider)
+        {
+            const string email = "computerprogramming@cptc.edu";
+            const string username = "instructor";
+            const string password = "Programming";
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            // Check if any users are in database
+            if(userManager.Users.Count() == 0)
+            {
+                IdentityUser instructor = new IdentityUser()
+                {
+                    Email = email,
+                    UserName = username,
+                };
+
+                //Create instructor
+                await userManager.CreateAsync(instructor, password);
+                // Add to instructor role
+                await userManager.AddToRoleAsync(instructor, Instructor);
             }
         }
     }
